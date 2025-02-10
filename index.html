@@ -119,16 +119,34 @@
 
         .movable {
             position: absolute;
+            width: 200px;
+            height: 100px;
             background-color: rgba(255, 255, 255, 0.2);
-            padding: 10px;
-            border-radius: 10px;
+            padding: 20px;
             font-size: 1.2rem;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
             cursor: grab;
+            border: 2px solid #fff;
+            border-radius: 10px;
+            transition: all 0.3s ease-in-out;
         }
 
         .movable:active {
             cursor: grabbing;
+        }
+
+        /* Add a fall animation when dropped */
+        .falling {
+            animation: fallToBottom 1s ease-out forwards;
+        }
+
+        @keyframes fallToBottom {
+            from {
+                top: 0;
+            }
+            to {
+                top: 90vh; /* Set to fall near the bottom */
+            }
         }
 
         .bounce {
@@ -191,6 +209,7 @@
             function onMouseUp() {
                 window.removeEventListener('mousemove', onMouseMove);
                 window.removeEventListener('mouseup', onMouseUp);
+                movable.classList.add('falling'); // Add fall animation on drop
             }
 
             window.addEventListener('mousemove', onMouseMove);
