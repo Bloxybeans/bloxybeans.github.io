@@ -49,6 +49,7 @@
             max-width: 600px;
             transform: translateY(-30px);
             animation: fadeInUp 1s ease-out forwards;
+            position: relative;
         }
 
         @keyframes fadeInUp {
@@ -116,6 +117,33 @@
             transform: translateY(2px);
         }
 
+        .movable {
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            cursor: grab;
+        }
+
+        .movable:active {
+            cursor: grabbing;
+        }
+
+        .bounce {
+            animation: bounce 0.5s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
         /* Floating effect for the container */
         .container {
             animation: floating 3s ease-in-out infinite;
@@ -132,16 +160,47 @@
                 transform: translateY(-30px);
             }
         }
+
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Shopping Bag</h1>
-        <p>Dumb sites by dumb people</p>
+        <h1>Bag o' goodies</h1>
+        <p>dumb sites by dumb people</p>
         <div class="links">
-            <a href="https://nas.lastx.dev" target="_blank">LastXNAS</a>
-            <a href="https://bloxybeans.walmartshoppingbag.com/" target="_blank">Bloxybeans Games</a>
+            <a href="https://nas.lastx.dev" target="_blank" class="bounce">Lastxnas</a>
+            <a href="https://bloxybeans.walmartshoppingbag.com/" target="_blank" class="bounce">Bloxybeans Games</a>
         </div>
     </div>
+
+    <div class="movable" id="movable1">funny drag box</div>
+
+    <script>
+        // Draggable functionality
+        let movable = document.getElementById('movable1');
+
+        movable.addEventListener('mousedown', function(e) {
+            let offsetX = e.clientX - movable.getBoundingClientRect().left;
+            let offsetY = e.clientY - movable.getBoundingClientRect().top;
+
+            function onMouseMove(e) {
+                movable.style.left = e.clientX - offsetX + 'px';
+                movable.style.top = e.clientY - offsetY + 'px';
+            }
+
+            function onMouseUp() {
+                window.removeEventListener('mousemove', onMouseMove);
+                window.removeEventListener('mouseup', onMouseUp);
+            }
+
+            window.addEventListener('mousemove', onMouseMove);
+            window.addEventListener('mouseup', onMouseUp);
+        });
+
+        // Random background color change every 5 seconds
+        setInterval(function() {
+            document.body.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 70%)`;
+        }, 5000);
+    </script>
 </body>
 </html>
