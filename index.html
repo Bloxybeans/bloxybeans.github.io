@@ -132,6 +132,11 @@
             transition: transform 0.1s ease-out;
         }
 
+        .links a:hover .cursor {
+            transform: scale(1.5);
+            box-shadow: 0 0 25px rgba(52, 152, 219, 0.9);
+        }
+
         /* Floating effect for the container */
         .container {
             animation: floating 3s ease-in-out infinite;
@@ -149,15 +154,23 @@
             }
         }
 
-        @keyframes gradientBackground {
+        /* Star styles (now handled dynamically) */
+        .star {
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            animation: float 5s infinite ease-in-out;
+        }
+
+        @keyframes float {
             0% {
-                background-position: 0% 50%;
+                transform: translateY(0) scale(0.7);
             }
             50% {
-                background-position: 100% 50%;
+                transform: translateY(-10px) scale(1);
             }
             100% {
-                background-position: 0% 50%;
+                transform: translateY(0) scale(0.7);
             }
         }
     </style>
@@ -184,26 +197,22 @@
             cursor.style.top = `${e.pageY}px`;
         });
 
-        // Draggable functionality for the container (optional)
-        let movable = document.querySelector('.container');
-        movable.addEventListener('mousedown', function(e) {
-            let offsetX = e.clientX - movable.getBoundingClientRect().left;
-            let offsetY = e.clientY - movable.getBoundingClientRect().top;
-
-            function onMouseMove(e) {
-                movable.style.left = e.clientX - offsetX + 'px';
-                movable.style.top = e.clientY - offsetY + 'px';
+        // Function to generate stars dynamically
+        function generateStars() {
+            for (let i = 0; i < 50; i++) {
+                let star = document.createElement('div');
+                star.classList.add('star');
+                star.style.width = `${Math.random() * 3 + 2}px`; // Random size
+                star.style.height = star.style.width;
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                star.style.animationDuration = `${Math.random() * 2 + 1}s`; // Random animation duration
+                document.body.appendChild(star);
             }
+        }
 
-            function onMouseUp() {
-                window.removeEventListener('mousemove', onMouseMove);
-                window.removeEventListener('mouseup', onMouseUp);
-            }
-
-            window.addEventListener('mousemove', onMouseMove);
-            window.addEventListener('mouseup', onMouseUp);
-        });
-
+        // Call the function to generate stars
+        generateStars();
     </script>
 </body>
 </html>
