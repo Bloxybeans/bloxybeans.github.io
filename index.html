@@ -13,7 +13,7 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(45deg, #6a11cb, #2575fc);
+            background-color: #000;
             color: #fff;
             margin: 0;
             padding: 0;
@@ -22,20 +22,8 @@
             justify-content: center;
             align-items: center;
             overflow: hidden;
-            background-size: 400% 400%;
-            animation: gradientBackground 10s ease infinite;
-        }
-
-        @keyframes gradientBackground {
-            0% {
-                background-position: 0% 50%;
-            }
-            50% {
-                background-position: 100% 50%;
-            }
-            100% {
-                background-position: 0% 50%;
-            }
+            position: relative;
+            user-select: none; /* Disable text selection */
         }
 
         .container {
@@ -117,67 +105,55 @@
             transform: translateY(2px);
         }
 
-        .movable {
+        /* Stars and glowing effect */
+        .star {
             position: absolute;
-            width: 250px;
-            height: 150px;
-            background: linear-gradient(45deg, #ff6600, #ffcc33);
-            padding: 15px;
-            font-size: 1.2rem;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-            cursor: grab;
-            border: 2px solid #fff;
-            border-radius: 10px;
-            transition: all 0.3s ease-in-out;
-            top: 20px;
-            left: 20px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.8);
+            opacity: 0;
+            animation: glint 2s infinite ease-in-out;
         }
 
-        .movable:active {
-            cursor: grabbing;
-        }
-
-        /* Add a fall animation when dropped */
-        .falling {
-            animation: fallToBottom 1s ease-out forwards;
-        }
-
-        @keyframes fallToBottom {
-            from {
-                top: 20px;
-            }
-            to {
-                top: 90vh; /* Set to fall near the bottom */
-            }
-        }
-
-        .bounce {
-            animation: bounce 0.5s ease-in-out infinite;
-        }
-
-        @keyframes bounce {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
-        }
-
-        /* Floating effect for the container */
-        .container {
-            animation: floating 3s ease-in-out infinite;
-        }
-
-        @keyframes floating {
+        @keyframes glint {
             0% {
-                transform: translateY(-30px);
+                opacity: 0;
+                transform: scale(0.5);
             }
             50% {
-                transform: translateY(10px);
+                opacity: 1;
+                transform: scale(1);
             }
             100% {
-                transform: translateY(-30px);
+                opacity: 0;
+                transform: scale(0.5);
+            }
+        }
+
+        /* Floating objects */
+        .floating-object {
+            position: absolute;
+            border-radius: 10px;
+            background-color: rgba(255, 255, 255, 0.7);
+            width: 30px;
+            height: 30px;
+            animation: floatAround 5s infinite linear;
+        }
+
+        @keyframes floatAround {
+            0% {
+                transform: translate(0, 0);
+            }
+            25% {
+                transform: translate(200px, 100px);
+            }
+            50% {
+                transform: translate(-150px, 250px);
+            }
+            75% {
+                transform: translate(-200px, -150px);
+            }
+            100% {
+                transform: translate(0, 0);
             }
         }
 
@@ -188,45 +164,42 @@
         <h1>Bag o' goodies</h1>
         <p>dumb sites by dumb people</p>
         <div class="links">
-            <a href="https://nas.lastx.dev" target="_blank" class="bounce">Lastxnas</a>
-            <a href="https://bloxybeans.walmartshoppingbag.com/" target="_blank" class="bounce">Bloxybeans Games</a>
+            <a href="https://nas.lastx.dev" target="_blank">Lastxnas</a>
+            <a href="https://bloxybeans.walmartshoppingbag.com/" target="_blank">Bloxybeans Games</a>
         </div>
     </div>
 
-    <div class="movable" id="movable1">funny drag box</div>
-
+    <!-- Generate random stars -->
     <script>
-        // Draggable functionality
-        let movable = document.getElementById('movable1');
-        let isDragging = false;
-        let offsetX, offsetY;
-
-        movable.addEventListener('mousedown', function(e) {
-            isDragging = true;
-            offsetX = e.clientX - movable.getBoundingClientRect().left;
-            offsetY = e.clientY - movable.getBoundingClientRect().top;
-            movable.style.zIndex = 1000; // Bring to front when dragging
-        });
-
-        window.addEventListener('mousemove', function(e) {
-            if (isDragging) {
-                movable.style.left = e.clientX - offsetX + 'px';
-                movable.style.top = e.clientY - offsetY + 'px';
+        function generateStars() {
+            for (let i = 0; i < 50; i++) {
+                let star = document.createElement('div');
+                star.classList.add('star');
+                star.style.width = `${Math.random() * 3 + 2}px`; // Random size
+                star.style.height = star.style.width;
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                star.style.animationDuration = `${Math.random() * 2 + 1}s`; // Random animation duration
+                document.body.appendChild(star);
             }
-        });
+        }
 
-        window.addEventListener('mouseup', function() {
-            if (isDragging) {
-                isDragging = false;
-                movable.classList.add('falling'); // Add fall animation on drop
-                movable.style.zIndex = ''; // Reset z-index
+        // Generate random floating objects
+        function generateFloatingObjects() {
+            for (let i = 0; i < 10; i++) {
+                let object = document.createElement('div');
+                object.classList.add('floating-object');
+                object.style.left = `${Math.random() * 100}%`;
+                object.style.top = `${Math.random() * 100}%`;
+                object.style.animationDuration = `${Math.random() * 5 + 3}s`; // Random floating speed
+                document.body.appendChild(object);
             }
-        });
+        }
 
-        // Random background color change every 5 seconds
-        setInterval(function() {
-            document.body.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 70%)`;
-        }, 5000);
+        // Initialize the page with stars and floating objects
+        generateStars();
+        generateFloatingObjects();
     </script>
+
 </body>
 </html>
