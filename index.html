@@ -7,7 +7,7 @@
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #2C3E50, #34495E);
+            background: #1e2a3a;
             color: #fff;
             margin: 0;
             padding: 0;
@@ -19,34 +19,56 @@
         }
         .container {
             text-align: center;
-            max-width: 500px;
             width: 100%;
-            padding: 40px;
-            background: rgba(0, 0, 0, 0.6);
+            max-width: 500px;
+            padding: 30px;
+            background: rgba(0, 0, 0, 0.7);
             border-radius: 15px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
             backdrop-filter: blur(10px);
+            transform: translateY(-30px);
+            animation: fadeInUp 1s ease-out forwards;
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         h1 {
-            font-size: 3rem;
+            font-size: 2.5rem;
             margin-bottom: 20px;
-            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
         p {
             font-size: 1.1rem;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             font-weight: 300;
             color: rgba(255, 255, 255, 0.8);
         }
         .links {
             display: flex;
             flex-direction: column;
-            align-items: center;
             gap: 15px;
+            animation: slideIn 1s ease-out forwards;
+        }
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         .links a {
             display: inline-block;
-            padding: 18px 35px;
+            padding: 15px 30px;
             font-size: 1.2rem;
             font-weight: 600;
             color: white;
@@ -64,42 +86,16 @@
         .links a:active {
             transform: translateY(1px);
         }
-        .bg-animation {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 200px;
-            height: 200px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            animation: pulse 4s infinite;
-            z-index: -1;
-        }
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-                opacity: 0.3;
-            }
-            50% {
-                transform: scale(1.5);
-                opacity: 0.6;
-            }
-            100% {
-                transform: scale(1);
-                opacity: 0.3;
-            }
-        }
     </style>
 </head>
 <body>
-    <div class="bg-animation"></div>
     <div class="container">
         <h1>Walmart Shopping Bag</h1>
-        <p>Fun things by dumb people</p>
+        <p>Dumb sites by dumb people</p>
         <div class="links">
-            <a href="https://nas.lastx.dev/" target="_blank">LastXNAS</a>
+            <a href="https://nas.lastx.dev" target="_blank">LastXNAS</a>
             <a href="https://bloxybeans.walmartshoppingbag.com/" target="_blank">Bloxybeans games</a>
         </div>
+    </div>
 </body>
 </html>
-
