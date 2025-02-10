@@ -89,14 +89,14 @@
             font-weight: 600;
             text-decoration: none;
             color: #fff;
-            background: linear-gradient(135deg, #3498db, #2ecc71);
+            background: linear-gradient(135deg, #6a11cb, #2575fc); /* Matching background gradient */
             border-radius: 10px;
             transition: all 0.4s ease-in-out;
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
         }
 
         .links a:hover {
-            background: linear-gradient(135deg, #2ecc71, #3498db);
+            background: linear-gradient(135deg, #2575fc, #6a11cb); /* Matching background gradient on hover */
             transform: translateY(-5px);
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
         }
@@ -129,34 +129,6 @@
             }
         }
 
-        /* Floating objects */
-        .floating-object {
-            position: absolute;
-            border-radius: 10px;
-            background-color: rgba(255, 255, 255, 0.7);
-            width: 30px;
-            height: 30px;
-            animation: floatAround 5s infinite linear;
-        }
-
-        @keyframes floatAround {
-            0% {
-                transform: translate(0, 0);
-            }
-            25% {
-                transform: translate(200px, 100px);
-            }
-            50% {
-                transform: translate(-150px, 250px);
-            }
-            75% {
-                transform: translate(-200px, -150px);
-            }
-            100% {
-                transform: translate(0, 0);
-            }
-        }
-
     </style>
 </head>
 <body>
@@ -164,7 +136,7 @@
         <h1>Bag o' goodies</h1>
         <p>dumb sites by dumb people</p>
         <div class="links">
-            <a href="https://nas.lastx.dev" target="_blank">Lastxnas</a>
+            <a href="https://shared.lastx.dev" target="_blank">Lastxnas</a>
             <a href="https://bloxybeans.walmartshoppingbag.com/" target="_blank">Bloxybeans Games</a>
         </div>
     </div>
@@ -184,21 +156,8 @@
             }
         }
 
-        // Generate random floating objects
-        function generateFloatingObjects() {
-            for (let i = 0; i < 10; i++) {
-                let object = document.createElement('div');
-                object.classList.add('floating-object');
-                object.style.left = `${Math.random() * 100}%`;
-                object.style.top = `${Math.random() * 100}%`;
-                object.style.animationDuration = `${Math.random() * 5 + 3}s`; // Random floating speed
-                document.body.appendChild(object);
-            }
-        }
-
-        // Initialize the page with stars and floating objects
+        // Initialize the page with stars
         generateStars();
-        generateFloatingObjects();
     </script>
 
 </body>
