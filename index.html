@@ -119,16 +119,18 @@
 
         .movable {
             position: absolute;
-            width: 200px;
-            height: 100px;
-            background-color: rgba(255, 255, 255, 0.2);
-            padding: 20px;
+            width: 250px;
+            height: 150px;
+            background: linear-gradient(45deg, #ff6600, #ffcc33);
+            padding: 15px;
             font-size: 1.2rem;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
             cursor: grab;
             border: 2px solid #fff;
             border-radius: 10px;
             transition: all 0.3s ease-in-out;
+            top: 20px;
+            left: 20px;
         }
 
         .movable:active {
@@ -142,7 +144,7 @@
 
         @keyframes fallToBottom {
             from {
-                top: 0;
+                top: 20px;
             }
             to {
                 top: 90vh; /* Set to fall near the bottom */
@@ -196,24 +198,29 @@
     <script>
         // Draggable functionality
         let movable = document.getElementById('movable1');
+        let isDragging = false;
+        let offsetX, offsetY;
 
         movable.addEventListener('mousedown', function(e) {
-            let offsetX = e.clientX - movable.getBoundingClientRect().left;
-            let offsetY = e.clientY - movable.getBoundingClientRect().top;
+            isDragging = true;
+            offsetX = e.clientX - movable.getBoundingClientRect().left;
+            offsetY = e.clientY - movable.getBoundingClientRect().top;
+            movable.style.zIndex = 1000; // Bring to front when dragging
+        });
 
-            function onMouseMove(e) {
+        window.addEventListener('mousemove', function(e) {
+            if (isDragging) {
                 movable.style.left = e.clientX - offsetX + 'px';
                 movable.style.top = e.clientY - offsetY + 'px';
             }
+        });
 
-            function onMouseUp() {
-                window.removeEventListener('mousemove', onMouseMove);
-                window.removeEventListener('mouseup', onMouseUp);
+        window.addEventListener('mouseup', function() {
+            if (isDragging) {
+                isDragging = false;
                 movable.classList.add('falling'); // Add fall animation on drop
+                movable.style.zIndex = ''; // Reset z-index
             }
-
-            window.addEventListener('mousemove', onMouseMove);
-            window.addEventListener('mouseup', onMouseUp);
         });
 
         // Random background color change every 5 seconds
