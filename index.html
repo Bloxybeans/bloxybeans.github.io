@@ -13,7 +13,7 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(45deg, #6a11cb, #2575fc);
+            background-color: #000;
             color: #fff;
             margin: 0;
             padding: 0;
@@ -22,21 +22,8 @@
             justify-content: center;
             align-items: center;
             overflow: hidden;
-            background-size: 400% 400%;
-            animation: gradientBackground 10s ease infinite;
-            cursor: none; /* Hide default cursor */
-        }
-
-        @keyframes gradientBackground {
-            0% {
-                background-position: 0% 50%;
-            }
-            50% {
-                background-position: 100% 50%;
-            }
-            100% {
-                background-position: 0% 50%;
-            }
+            position: relative;
+            user-select: none; /* Disable text selection */
         }
 
         .container {
@@ -102,14 +89,14 @@
             font-weight: 600;
             text-decoration: none;
             color: #fff;
-            background: linear-gradient(135deg, #3498db, #2ecc71);
+            background: linear-gradient(135deg, #6a11cb, #2575fc); /* Matching background gradient */
             border-radius: 10px;
             transition: all 0.4s ease-in-out;
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
         }
 
         .links a:hover {
-            background: linear-gradient(135deg, #2ecc71, #3498db);
+            background: linear-gradient(135deg, #2575fc, #6a11cb); /* Matching background gradient on hover */
             transform: translateY(-5px);
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
         }
@@ -118,61 +105,30 @@
             transform: translateY(2px);
         }
 
-        /* Glowing Neon Cursor */
-        .cursor {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background-color: #fff;
-            border: 3px solid #3498db;
-            box-shadow: 0 0 15px rgba(52, 152, 219, 0.7);
-            pointer-events: none;
-            transform: translate(-50%, -50%);
-            transition: transform 0.1s ease-out;
-        }
-
-        .links a:hover .cursor {
-            transform: scale(1.5);
-            box-shadow: 0 0 25px rgba(52, 152, 219, 0.9);
-        }
-
-        /* Floating effect for the container */
-        .container {
-            animation: floating 3s ease-in-out infinite;
-        }
-
-        @keyframes floating {
-            0% {
-                transform: translateY(-30px);
-            }
-            50% {
-                transform: translateY(10px);
-            }
-            100% {
-                transform: translateY(-30px);
-            }
-        }
-
-        /* Star styles (now handled dynamically) */
+        /* Stars and glowing effect */
         .star {
             position: absolute;
-            background-color: rgba(255, 255, 255, 0.8);
             border-radius: 50%;
-            animation: float 5s infinite ease-in-out;
+            background-color: rgba(255, 255, 255, 0.8);
+            opacity: 0;
+            animation: glint 2s infinite ease-in-out;
         }
 
-        @keyframes float {
+        @keyframes glint {
             0% {
-                transform: translateY(0) scale(0.7);
+                opacity: 0;
+                transform: scale(0.5);
             }
             50% {
-                transform: translateY(-10px) scale(1);
+                opacity: 1;
+                transform: scale(1);
             }
             100% {
-                transform: translateY(0) scale(0.7);
+                opacity: 0;
+                transform: scale(0.5);
             }
         }
+
     </style>
 </head>
 <body>
@@ -185,19 +141,8 @@
         </div>
     </div>
 
-    <!-- Custom cursor element -->
-    <div class="cursor"></div>
-
+    <!-- Generate random stars -->
     <script>
-        // Custom cursor functionality
-        const cursor = document.querySelector('.cursor');
-
-        document.addEventListener('mousemove', (e) => {
-            cursor.style.left = `${e.pageX}px`;
-            cursor.style.top = `${e.pageY}px`;
-        });
-
-        // Function to generate stars dynamically
         function generateStars() {
             for (let i = 0; i < 50; i++) {
                 let star = document.createElement('div');
@@ -211,8 +156,9 @@
             }
         }
 
-        // Call the function to generate stars
+        // Initialize the page with stars
         generateStars();
     </script>
+
 </body>
 </html>
